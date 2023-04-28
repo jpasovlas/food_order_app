@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import classes from './../../assets/css/HeaderCartButton.module.css';
 import CartIcon from '../Cart/CartIcon';
+import CartContext from '../../store/cart-context';
 
 const Header = (props) => {
-    return (<button className={classes.button}>
+
+    const ctx = useContext(CartContext);
+
+    const cartItemsLength = ctx.items.reduce((curr, item) => {
+        return curr + item.amount;
+    }, 0);
+
+    return (<button className={classes.button} onClick={props.onClick}>
         <span className={classes.icon}>
             <CartIcon />
         </span>
@@ -11,7 +19,7 @@ const Header = (props) => {
             Your Cart
         </span>
         <span className={classes.badge}>
-            3
+            {cartItemsLength}
         </span>
     </button>);
 };
